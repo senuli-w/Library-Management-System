@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LibraHub – Library Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      <span>LibraHub</span>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-btn" data-view="books">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+        Books
+      </button>
+      <button class="nav-btn" data-view="loans">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg>
+        Loans
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <h1 id="view-title">Dashboard</h1>
+      <div class="topbar-actions">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="global-search" placeholder="Search books..." />
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard View -->
+    <section id="view-dashboard" class="view active">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-books">0</span>
+            <span class="stat-label">Total Books</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-available">0</span>
+            <span class="stat-label">Available Copies</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-active">0</span>
+            <span class="stat-label">Active Loans</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-borrowers">0</span>
+            <span class="stat-label">Unique Borrowers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Recent Books</h2>
+            <button class="btn-text" data-view="books">View All</button>
+          </div>
+          <div class="panel-body" id="recent-books"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Active Loans</h2>
+            <button class="btn-text" data-view="loans">View All</button>
+          </div>
+          <div class="panel-body" id="active-loans"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Books View -->
+    <section id="view-books" class="view">
+      <div class="view-header">
+        <div class="tabs">
+          <button class="tab active" data-tab="book-list">All Books</button>
+          <button class="tab" data-tab="add-book">Add Book</button>
+        </div>
+      </div>
+
+      <div id="tab-book-list" class="tab-content active">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Total</th>
+                <th>Available</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="books-table"></tbody>
+          </table>
+          <div id="books-empty" class="empty-state hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+            <p>No books in the library yet</p>
+            <button class="btn-primary" data-tab="add-book">Add Your First Book</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-add-book" class="tab-content">
+        <div class="form-card">
+          <h3>Add a New Book</h3>
+          <form id="book-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="book-title">Title</label>
+                <input type="text" id="book-title" name="title" placeholder="Enter book title" required />
+              </div>
+              <div class="form-group">
+                <label for="book-author">Author</label>
+                <input type="text" id="book-author" name="author" placeholder="Enter author name" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="book-category">Category</label>
+                <input type="text" id="book-category" name="category" placeholder="e.g. Fiction, Science" />
+              </div>
+              <div class="form-group">
+                <label for="book-copies">Number of Copies</label>
+                <input type="number" id="book-copies" name="copies_total" min="1" value="1" required />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" data-tab="book-list">Cancel</button>
+              <button type="submit" class="btn-primary">Add Book</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loans View -->
+    <section id="view-loans" class="view">
+      <div class="view-header">
+        <div class="tabs">
+          <button class="tab active" data-tab="loan-list">All Loans</button>
+          <button class="tab" data-tab="new-loan">New Loan</button>
+        </div>
+        <div class="filter-group">
+          <label>Status:</label>
+          <select id="loan-filter">
+            <option value="">All</option>
+            <option value="borrowed">Borrowed</option>
+            <option value="returned">Returned</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="tab-loan-list" class="tab-content active">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Book</th>
+                <th>Borrower</th>
+                <th>Email</th>
+                <th>Loaned</th>
+                <th>Due</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="loans-table"></tbody>
+          </table>
+          <div id="loans-empty" class="empty-state hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg>
+            <p>No loans recorded yet</p>
+            <button class="btn-primary" data-tab="new-loan">Create First Loan</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-new-loan" class="tab-content">
+        <div class="form-card">
+          <h3>Create a New Loan</h3>
+          <form id="loan-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="loan-book">Select Book</label>
+                <select id="loan-book" name="book_id" required></select>
+              </div>
+              <div class="form-group">
+                <label for="loan-borrower">Borrower Name</label>
+                <input type="text" id="loan-borrower" name="borrower_name" placeholder="Enter borrower name" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="loan-email">Email (optional)</label>
+                <input type="email" id="loan-email" name="borrower_email" placeholder="borrower@email.com" />
+              </div>
+              <div class="form-group">
+                <label for="loan-due">Due Date (optional)</label>
+                <input type="date" id="loan-due" name="due_date" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" data-tab="loan-list">Cancel</button>
+              <button type="submit" class="btn-primary">Create Loan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for Edit Book -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Book</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="edit-form">
+        <input type="hidden" id="edit-id" />
+        <div class="form-group">
+          <label for="edit-title">Title</label>
+          <input type="text" id="edit-title" name="title" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-author">Author</label>
+          <input type="text" id="edit-author" name="author" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-category">Category</label>
+          <input type="text" id="edit-category" name="category" />
+        </div>
+        <div class="form-group">
+          <label for="edit-copies">Total Copies</label>
+          <input type="number" id="edit-copies" name="copies_total" min="1" required />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
